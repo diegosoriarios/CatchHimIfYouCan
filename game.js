@@ -7,6 +7,8 @@ const scoreEl = document.querySelector("#score-element")
 const cam = document.querySelector("a-camera")
 const tree = document.querySelector("#tree")
 
+const SPEED = .2
+
 let score = 0
 function displayScore() {
     scoreEl.setAttribute('value', `Score: ${score}`)
@@ -15,30 +17,19 @@ function displayScore() {
 let picture = ""
 let enemyItsOnPicture = false
 
-function randomPosition() {
+function randomPosition(right) {
     return {
-        x: -5,
+        x: right ? -20 : 20,
         y: 0,
-        z: Math.random() > .5 ? -20 : 20
+        z: right ? -20 : 20
     }
 }
 
-function createHeart() {
-    console.log("Created")
-    let clone = rightEl.cloneNode()
-    //if (Math.random() > .5) clone = rightEl.cloneNode()
-    //else clone = leftEl.cloneNode()
-    clone.setAttribute("position", randomPosition())
+function createNPC(node, right = true) {
+    let clone = node.cloneNode()    
+    clone.setAttribute("speed", SPEED)
+    clone.setAttribute("position", randomPosition(right))
     clone.setAttribute("scale", "5, 1, 2")
-    clone.addEventListener("mousedown", () => {
-        score++;
-        clone.dispatchEvent(new Event("collected"))
-        displayScore()
-    })
-    clone.addEventListener('animationcomplete', () => {
-        clone.setAttribute("position", randomPosition())
-        clone.setAttribute('scale', '0.01 0.01 0.01')
-    })
     sceneEl.appendChild(clone)
 }
 
@@ -56,8 +47,8 @@ function createTrees() {
     sceneEl.appendChild(clone)
 }
 
-for(let i = 0; i < 15; i++) createHeart()
-
+createNPC(rightEl)
+createNPC(leftEl, false)
 
 const enemy = fourOfour.cloneNode()
 enemy.setAttribute("position", {x: 0, y: 1.5, z: -5})
@@ -70,24 +61,28 @@ for (let i = 0; i < 5; i++) createTrees()
 function loop() {
     sceneEl.childNodes.forEach(npc => {
         if (npc.id === "right-model"){
-            npc.object3D.position.x += 0.04
-            if (npc.object3D.position.x > 20) sceneEl.removeChild(npc)
+            npc.object3D.position.x += parseFloat(npc.getAttribute("speed"))
+            if (npc.object3D.position.x > 20) removeNpc(npc, rightEl)
         } else if (npc.id === "left-model"){
-            npc.object3D.position.x -= 0.04
-            if (npc.object3D.position.x < -20) sceneEl.removeChild(npc)
+            npc.object3D.position.x -= parseFloat(npc.getAttribute("speed"))
+            if (npc.object3D.position.x < -20) removeNpc(npc, leftEl, false)
         }
     })
     requestAnimationFrame(loop)
 }
 
-console.clear()
+function removeNpc(npc, node, direction = true) {
+    sceneEl.removeChild(npc)
+    createNPC(node, direction)
+}
+
+//console.clear()
 AFRAME.registerComponent('check-enemy', {
     tick: function() {
      if (this.el.sceneEl.camera) {
         var cam = this.el.sceneEl.camera
         var frustum = new THREE.Frustum();
-        frustum.setFromMatrix(new THREE.Matrix4().multiplyMatrices(cam.projectionMatrix, 
-        cam.matrixWorldInverse));  
+        frustum.setFromMatrix(new THREE.Matrix4().multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse));  
   
         // Your 3d point to check
         var pos = new THREE.Vector3(enemy.getAttribute("position").x, enemy.getAttribute("position").y, enemy.getAttribute("position").z);
@@ -99,6 +94,8 @@ AFRAME.registerComponent('check-enemy', {
      }
     }
 })
+
+console.clear()
 loop()
 
 window.onkeydown = event => {
