@@ -13,6 +13,7 @@ function displayScore() {
 }
 
 let picture = ""
+let enemyItsOnPicture = false
 
 function randomPosition() {
     return {
@@ -58,9 +59,9 @@ function createTrees() {
 for(let i = 0; i < 15; i++) createHeart()
 
 
-//const enemy = fourOfour.cloneNode()
-//enemy.setAttribute("position", {x: 5, y: 1.5, z: -5})
-//sceneEl.appendChild(enemy)
+const enemy = fourOfour.cloneNode()
+enemy.setAttribute("position", {x: 0, y: 1.5, z: -5})
+sceneEl.appendChild(enemy)
 
 //displayScore()
 
@@ -79,10 +80,30 @@ function loop() {
     requestAnimationFrame(loop)
 }
 
+console.clear()
+AFRAME.registerComponent('check-enemy', {
+    tick: function() {
+     if (this.el.sceneEl.camera) {
+        var cam = this.el.sceneEl.camera
+        var frustum = new THREE.Frustum();
+        frustum.setFromMatrix(new THREE.Matrix4().multiplyMatrices(cam.projectionMatrix, 
+        cam.matrixWorldInverse));  
+  
+        // Your 3d point to check
+        var pos = new THREE.Vector3(enemy.getAttribute("position").x, enemy.getAttribute("position").y, enemy.getAttribute("position").z);
+        if (frustum.containsPoint(pos)) {
+            enemyItsOnPicture = true
+        } else {
+            enemyItsOnPicture = false
+        }
+     }
+    }
+})
 loop()
 
 window.onkeydown = event => {
     if (event.keyCode === 32) {
+        console.log(enemyItsOnPicture)
         picture = document.querySelector('a-scene').components.screenshot.getCanvas('perspective').toDataURL('image/png');
         image.setAttribute('src', picture)
         let clone = document.querySelector("#pictureImage").cloneNode()

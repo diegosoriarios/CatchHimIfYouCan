@@ -21,7 +21,7 @@
     <a-assets>
       <img id="image" crossorigin="anonymous" src="placeholder.jpg">
     </a-assets>
-    <a-camera wasd-controls-enabled="false" position="0 2 0">
+    <a-camera wasd-controls-enabled="false" position="0 2 0" check-enemy>
       <a-entity id="frame" geometry="primitive: plane" position="0 0 -1" material="color: gray; opacity: 0">
         <a-image id="pictureImage" src="#image" position="-.75 .7 0" width=".2" height=".2"></a-image>
       </a-entity> 
@@ -179,18 +179,9 @@
   -->
 
   <a-entity>
-    <a-box id="fourOfour" position="5 1.5 -5"
+    <a-box id="fourOfour"
     color="blue"
-    animation__collect="property: position; to: 0 0 0; dur: 300; startEvents: collected"
-    animation__minimize="property: scale; to: 0 0 0; dur: 300; startEvents: collected"
     scale="1 1 1">
-  
-    <a-box id="fourOfour" position="5 2 -5"
-    color="blue"
-    animation__collect="property: position; to: 0 0 0; dur: 300; startEvents: collected"
-    animation__minimize="property: scale; to: 0 0 0; dur: 300; startEvents: collected"
-    scale="1 1 1"></a-box>
-
   </a-box>
   </a-entity>
 
