@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Catch him if you can</title>
+  <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+  <!--<script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>-->
+  <style>
+    #image {
+      border: 2px solid black;
+      margin: 20px;
+      width: 128px;
+      height: 128px;
+    }
+  </style>
+</head>
+<body>
+  <a-scene>
+    <a-assets>
+      <img id="image" crossorigin="anonymous" src="placeholder.jpg">
+    </a-assets>
+    <a-camera wasd-controls-enabled="false" position="0 2 0" check-enemy>
+      <a-entity id="frame" geometry="primitive: plane" position="0 0 -1" material="color: gray; opacity: 0">
+        <a-image id="pictureImage" src="#image" position="-.75 .7 0" width=".28" height=".2"></a-image>
+      </a-entity> 
+      <a-cursor></a-cursor>
+    </a-camera>
+
+    <a-light type="point" color="blue" position="0 5 0"></a-light>
+
+    <a-entity name="bench">
+      
+    </a-entity>
+
+    <a-entity laser-controls></a-entity>
+
+    <a-sky color="#584880"></a-sky>
+    <a-entity laser-controls></a-entity>
+    
+    <a-box
+      color="#7b9a1b"
+      position="0 -2 0"
+      scale="100 1 100"
+    ></a-box>
+
+  </a-scene>
+
+  <!--
+  <a-entity id="heart-model" gltf-model="Heart.gltf" position="0 1.5 -5"
+    scale="0.01 0.01 0.01"
+    animation="property: rotation; to: 0 360 0; loop: true; easing: linear; dur: 2000"
+    animation__collect="property: position; to: 0 0 0; dur: 300; startEvents: collected"
+    animation__minimize="property: scale; to: 0 0 0; dur: 300; startEvents: collected"></a-entity>
+
+  -->
+
+  <a-entity>
+    <a-box id="fourOfour"
+    color="white"
+    scale="1 1 1">
+  </a-box>
+  </a-entity>
+
+  <a-entity>
+    <a-box id="right-model" position="0 1.5 -5"
+    color="red"
+    scale="1 1 1"></a-box>
+  </a-entity>
+  <a-entity>
+    <a-box id="left-model" position="0 1.5 -5"
+    color="red"
+    scale="1 1 1"></a-box>
+  </a-entity>
+  
+  <a-entity id="tree">
+    <a-cylinder color="#974238" height="5" radius=".25" position="0 0 0" ></a-cylinder>
+    <a-dodecahedron color="#367330" radius="2" position="0 4 0"></a-dodecahedron>
+  </a-entity>
+
+
+  <template id="buildings">
+    <a-entity id="front-building">
+      <a-box
+        color="lightgrey"
+        position="-20 -1 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-20 -4 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-20 2 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-20 5 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-20 8 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-20 11 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-20 14 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-20 -4 0"
+        scale="10 1 20"
+      ></a-box>
+
+      <a-box
+        color="lightgrey"
+        position="-15 5 0"
+        scale="1 20 5"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-15 5 10"
+        scale="1 20 5"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-15 5 -10"
+        scale="1 20 5"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-25 5 0"
+        scale="1 20 25"
+      ></a-box>
+      
+    </a-entity>
+
+    <a-entity id="back-building">
+      <a-box
+        color="lightgrey"
+        position="20 -1 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="20 -4 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="20 2 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="20 5 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="20 8 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="20 11 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="20 14 0"
+        scale="10 1 20"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="20 -4 0"
+        scale="10 1 20"
+      ></a-box>
+
+      <a-box
+        color="lightgrey"
+        position="15 5 0"
+        scale="1 20 5"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="15 5 10"
+        scale="1 20 5"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="15 5 -10"
+        scale="1 20 5"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="25 5 0"
+        scale="1 20 25"
+      ></a-box>
+      
+    </a-entity>
+
+    <a-entity id="left-building">
+      <a-box
+        color="lightgrey"
+        position="0 -1 20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 -4 20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 2 20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 5 20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 8 20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 11 20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 14 20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 -4 20"
+        scale="20 1 10"
+      ></a-box>
+
+      <a-box
+        color="lightgrey"
+        position="0 5 15"
+        scale="5 20 1"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="10 5 15"
+        scale="5 20 1"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-10 5 15"
+        scale="5 20 1"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 5 25"
+        scale="25 20 1"
+      ></a-box>
+      
+    </a-entity>
+    <a-entity id="right-building">
+      <a-box
+        color="lightgrey"
+        position="0 -1 -20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 -4 -20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 2 -20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 5 -20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 8 -20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 11 -20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 14 -20"
+        scale="20 1 10"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="0 -4 -20"
+        scale="20 1 10"
+      ></a-box>
+
+      <a-box
+        color="lightgrey"
+        position="0 5 -15"
+        scale="5 20 1"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="10 5 -15"
+        scale="5 20 1"
+      ></a-box>
+      <a-box
+        color="lightgrey"
+        position="-10 5 -15"
+        scale="5 20 1"
+      ></a-box>
+      
+      <a-box
+        color="lightgrey"
+        position="0 5 -25"
+        scale="25 20 1"
+      ></a-box>
+      
+    </a-entity>
+  </template>
+  <script src="level2.js"></script>
+</body>
+</html>
