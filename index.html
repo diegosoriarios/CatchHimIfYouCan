@@ -23,7 +23,7 @@
     </a-assets>
     <a-camera wasd-controls-enabled="false" position="0 2 0" check-enemy>
       <a-entity id="frame" geometry="primitive: plane" position="0 0 -1" material="color: gray; opacity: 0">
-        <a-image id="pictureImage" src="#image" position="-.75 .7 0" width=".2" height=".2"></a-image>
+        <a-image id="pictureImage" src="#image" position="-.75 .7 0" width=".28" height=".2"></a-image>
       </a-entity> 
       <a-cursor></a-cursor>
       
@@ -47,6 +47,55 @@
     <a-entity laser-controls></a-entity>
     
 
+    <a-sky color="#7ec0ee"></a-sky>
+    <a-entity laser-controls></a-entity>
+    <a-box
+      color="#7b9a1b"
+      position="0 -1 0"
+      scale="30 1 30"
+    ></a-box>
+    <a-box
+      color="black"
+      position="0 -2 0"
+      scale="70 1 70"
+    ></a-box>
+    
+  </a-scene>
+
+  <!--
+  <a-entity id="heart-model" gltf-model="Heart.gltf" position="0 1.5 -5"
+    scale="0.01 0.01 0.01"
+    animation="property: rotation; to: 0 360 0; loop: true; easing: linear; dur: 2000"
+    animation__collect="property: position; to: 0 0 0; dur: 300; startEvents: collected"
+    animation__minimize="property: scale; to: 0 0 0; dur: 300; startEvents: collected"></a-entity>
+
+  -->
+
+  <a-entity>
+    <a-box id="fourOfour"
+    color="blue"
+    scale="1 1 1">
+  </a-box>
+  </a-entity>
+
+  <a-entity>
+    <a-box id="right-model" position="0 1.5 -5"
+    color="red"
+    scale="1 1 1"></a-box>
+  </a-entity>
+  <a-entity>
+    <a-box id="left-model" position="0 1.5 -5"
+    color="red"
+    scale="1 1 1"></a-box>
+  </a-entity>
+  
+  <a-entity id="tree">
+    <a-cylinder color="#974238" height="5" radius=".25" position="0 0 0" ></a-cylinder>
+    <a-dodecahedron color="#367330" radius="2" position="0 4 0"></a-dodecahedron>
+  </a-entity>
+
+
+  <template id="buildings">
     <a-entity name="buildings-behind">
       <a-box
         name="seat"
@@ -153,57 +202,7 @@
       ></a-box>
       
     </a-entity>
-
-    <a-sky color="#7ec0ee"></a-sky>
-    <a-entity laser-controls></a-entity>
-    <a-box
-      color="#7b9a1b"
-      position="0 -1 0"
-      scale="30 1 30"
-    ></a-box>
-    <a-box
-      color="black"
-      position="0 -2 0"
-      scale="70 1 70"
-    ></a-box>
-    
-  </a-scene>
-
-  <!--
-  <a-entity id="heart-model" gltf-model="Heart.gltf" position="0 1.5 -5"
-    scale="0.01 0.01 0.01"
-    animation="property: rotation; to: 0 360 0; loop: true; easing: linear; dur: 2000"
-    animation__collect="property: position; to: 0 0 0; dur: 300; startEvents: collected"
-    animation__minimize="property: scale; to: 0 0 0; dur: 300; startEvents: collected"></a-entity>
-
-  -->
-
-  <a-entity>
-    <a-box id="fourOfour"
-    color="blue"
-    scale="1 1 1">
-  </a-box>
-  </a-entity>
-
-  <a-entity>
-    <a-box id="right-model" position="0 1.5 -5"
-    color="red"
-    animation__collect="property: position; to: 0 0 0; dur: 300; startEvents: collected"
-    animation__minimize="property: scale; to: 0 0 0; dur: 300; startEvents: collected"
-    scale="1 1 1"></a-box>
-  </a-entity>
-  <a-entity>
-    <a-box id="left-model" position="0 1.5 -5"
-    color="red"
-    animation__collect="property: position; to: 0 0 0; dur: 300; startEvents: collected"
-    animation__minimize="property: scale; to: 0 0 0; dur: 300; startEvents: collected"
-    scale="1 1 1"></a-box>
-  </a-entity>
-  
-  <a-entity id="tree">
-    <a-cylinder color="#974238" height="5" radius=".25" position="0 0 0" ></a-cylinder>
-    <a-dodecahedron color="#367330" radius="2" position="0 4 0"></a-dodecahedron>
-  </a-entity>
+  </template>
   <script src="game.js"></script>
 </body>
 </html>

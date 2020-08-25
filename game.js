@@ -6,6 +6,7 @@ const fourOfour = document.querySelector("#fourOfour")
 const scoreEl = document.querySelector("#score-element")
 const cam = document.querySelector("a-camera")
 const tree = document.querySelector("#tree")
+const buildings = document.querySelector("#buildings")
 
 const SPEED = .2
 
@@ -16,6 +17,7 @@ function displayScore() {
 
 let picture = ""
 let enemyItsOnPicture = false
+let enemy = null
 
 function randomPosition(right) {
     return {
@@ -26,7 +28,7 @@ function randomPosition(right) {
 }
 
 function createNPC(node, right = true) {
-    let clone = node.cloneNode()    
+    let clone = node.cloneNode()
     clone.setAttribute("speed", SPEED)
     clone.setAttribute("position", randomPosition(right))
     clone.setAttribute("scale", "5, 1, 2")
@@ -50,10 +52,6 @@ function createTrees() {
 createNPC(rightEl)
 createNPC(leftEl, false)
 
-const enemy = fourOfour.cloneNode()
-enemy.setAttribute("position", {x: 0, y: 1.5, z: -5})
-sceneEl.appendChild(enemy)
-
 //displayScore()
 
 for (let i = 0; i < 5; i++) createTrees()
@@ -66,6 +64,10 @@ function loop() {
         } else if (npc.id === "left-model"){
             npc.object3D.position.x -= parseFloat(npc.getAttribute("speed"))
             if (npc.object3D.position.x < -20) removeNpc(npc, leftEl, false)
+        } else if (npc.id === "fourOfour") {
+            enemy = npc
+            npc.object3D.position.x -= parseFloat(npc.getAttribute("speed"))
+            if (npc.object3D.position.x < -20) removeNpc(npc, leftEl, false)
         }
     })
     requestAnimationFrame(loop)
@@ -73,6 +75,7 @@ function loop() {
 
 function removeNpc(npc, node, direction = true) {
     sceneEl.removeChild(npc)
+    if (Math.random() < .2) node = fourOfour.cloneNode()
     createNPC(node, direction)
 }
 
@@ -85,22 +88,24 @@ AFRAME.registerComponent('check-enemy', {
         frustum.setFromMatrix(new THREE.Matrix4().multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse));  
   
         // Your 3d point to check
-        var pos = new THREE.Vector3(enemy.getAttribute("position").x, enemy.getAttribute("position").y, enemy.getAttribute("position").z);
-        if (frustum.containsPoint(pos)) {
-            enemyItsOnPicture = true
-        } else {
-            enemyItsOnPicture = false
+        if (enemy) {
+            var pos = new THREE.Vector3(enemy.getAttribute("position").x, enemy.getAttribute("position").y, enemy.getAttribute("position").z);
+            if (frustum.containsPoint(pos)) {
+                enemyItsOnPicture = true
+            } else {
+                enemyItsOnPicture = false
+            }
         }
      }
     }
 })
 
 console.clear()
+sceneEl.appendChild(document.importNode(buildings.content, true))
 loop()
 
 window.onkeydown = event => {
     if (event.keyCode === 32) {
-        console.log(enemyItsOnPicture)
         picture = document.querySelector('a-scene').components.screenshot.getCanvas('perspective').toDataURL('image/png');
         image.setAttribute('src', picture)
         let clone = document.querySelector("#pictureImage").cloneNode()
